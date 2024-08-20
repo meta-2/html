@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details Submission</title>
+</head>
+<body>
+    <h2>Enter Your Details</h2>
+    <form id="detailsForm">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br>
+        <label for="email">Email:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+        <input type="submit" value="Submit">
+    </form>
+    <p id="response"></p>
+
+    <script>
+        document.getElementById("detailsForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            fetch('https://script.google.com/macros/s/AKfycbwUQc3-BGoGzaQSXdwjXsA1yqabrJxG6BR6nTy6314tygBUT56pHmgOzPdmh61M-hCZ/exec', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("response").innerText = "Your password is: " + data;
+            })
+            .catch(error => {
+                document.getElementById("response").innerText = "An error occurred. Please try again.";
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
